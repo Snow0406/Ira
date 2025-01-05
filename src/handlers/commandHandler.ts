@@ -58,7 +58,7 @@ function buildStringOption(command: SlashCommandBuilder, option: CommandOption) 
     command.addStringOption((opt: any) => {
         const commandOption = opt
             .setName(option.name)
-            .setDescription(option.description)
+            .setDescription(option.description || "-")
             .setRequired(option.required)
             .setNameLocalizations(option.l10n?.name ?? null)
             .setDescriptionLocalizations(option.l10n?.description ?? null);
@@ -81,7 +81,7 @@ function buildNumberOption(command: SlashCommandBuilder, option: CommandOption) 
     command.addIntegerOption((opt: any) => {
         const commandOption = opt
             .setName(option.name)
-            .setDescription(option.description)
+            .setDescription(option.description || "-")
             .setRequired(option.required)
             .setNameLocalizations(option.l10n?.name ?? null)
             .setDescriptionLocalizations(option.l10n?.description ?? null);
@@ -104,7 +104,7 @@ function buildBooleanOption(command: SlashCommandBuilder, option: CommandOption)
     command.addBooleanOption((opt: any) =>
         opt
             .setName(option.name)
-            .setDescription(option.description)
+            .setDescription(option.description || "-")
             .setRequired(option.required)
             .setNameLocalizations(option.l10n?.name ?? null)
             .setDescriptionLocalizations(option.l10n?.description ?? null)
