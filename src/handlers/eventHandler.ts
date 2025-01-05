@@ -26,7 +26,7 @@ export function setupEventHandlers(client: Client) {
 function setupInitialPresence(client: Client) {
     // 초기 상태 설정
     client.user?.setPresence({
-        status: PresenceUpdateStatus.DoNotDisturb,
+        status: PresenceUpdateStatus.Idle,
         activities: [{
             name: "기상",
             type: ActivityType.Custom,

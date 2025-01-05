@@ -1,6 +1,7 @@
 import { ApplicationCommandOptionType, REST, Routes, SlashCommandBuilder } from "discord.js";
 import { allCommands } from "@src/commands";
 import { Command, CommandOption } from "@src/types";
+import "dotenv/config";
 
 type OptionBuilderFunction = (command: SlashCommandBuilder, option: CommandOption) => void;
 
@@ -10,10 +11,7 @@ export async function registerSlashCommands() : Promise<void> {
     try {
         const commandsData = allCommands.map(cmd => buildCommand(cmd))
         const data = await rest.put(
-            Routes.applicationGuildCommands(
-                process.env.APP_ID!,
-                process.env.GUILD_ID!
-            ),
+            Routes.applicationCommands(process.env.APP_ID!),
             { body: commandsData }
         );
         //@ts-expect-error data is unknown

@@ -1,7 +1,22 @@
 {
+	"name": "ira",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.ts",
+	"scripts": {
+		"dev": "tsx watch ./src/index.ts",
+		"start": "tsx ./src/index.ts"
+	},
+	"keywords": [],
+	"author": "Snow0406",
+	"license": "MIT",
+	"type": "module",
 	"dependencies": {
 		"discord.js": "^14.17.2",
 		"dotenv": "^16.4.7",
 		"fast-glob": "^3.3.3"
+	},
+	"devDependencies": {
+		"tsx": "^4.19.2"
 	}
 }
