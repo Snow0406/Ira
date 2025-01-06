@@ -11,7 +11,7 @@ export async function registerSlashCommands() : Promise<void> {
     try {
         const commandsData = allCommands.map(cmd => buildCommand(cmd))
         const data = await rest.put(
-            Routes.applicationCommands(process.env.APP_ID!),
+            Routes.applicationGuildCommands(process.env.APP_ID!, process.env.GUILD_ID!),
             { body: commandsData }
         );
         //@ts-expect-error data is unknown
