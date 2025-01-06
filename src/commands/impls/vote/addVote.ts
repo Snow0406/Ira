@@ -71,6 +71,6 @@ export default class VoteCommand implements Command {
                 iconURL: interaction.user.avatarURL() || undefined,
             })
             .setTimestamp();
-        await interaction.reply({embeds: [embed] });
+        await interaction.reply({embeds: [embed], flags: ["Ephemeral"] });
     }
 }

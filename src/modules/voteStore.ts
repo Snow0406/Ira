@@ -47,16 +47,29 @@ class VoteStore {
         const vote = this.getVote(index);
         if (!vote) {
             console.log(`* getVoteResult failed: ${index} not found`);
-            return { type: false, content: [] };
+            return { type: false, content: "없는 투표입니다." };
         }
 
-        const counts = new Array<number>(vote.maxOption);
+        const counts = new Array(vote.maxOption).fill(0);
 
          for (const [_, voteOption] of vote.voteUsers)
-             counts[voteOption]++;
+             counts[voteOption - 1]++;
 
-        counts.sort((a, b) => b - a); // 투표자가 많은것부터 나열
-        return { type: false, content: counts };
+        // 결과 포맷팅
+        const results = counts.map((count, index) => ({
+            option: index + 1,
+            count: count
+        }));
+
+        // 투표 수로 정렬
+        results.sort((a, b) => b.count - a.count);
+
+        // 결과 문자열 생성
+        const formattedResults = results.map((item, index) =>
+            `− ${index + 1}등: ${item.option}번 (${item.count}명)`
+        );
+
+        return { type: true, content: formattedResults };
     }
 
     // 투표 삭제하기

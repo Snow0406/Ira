@@ -41,21 +41,21 @@ export default class ViewVoteCommand implements Command {
                     iconURL: interaction.user.avatarURL() || undefined,
                 })
                 .setTimestamp();
-            await interaction.reply({embeds: [embed] });
+            await interaction.reply({embeds: [embed]});
             return;
         }
-
-        const result: string[] = Object.entries(data.content).map((s, i) => `− ${i+1}등: ${s}명`);
-
-        const embed = new EmbedBuilder()
-            .setColor("#83b3f6")
-            .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
-            .setDescription(result.join("\n"))
-            .setFooter({
-                text: interaction.user.tag,
-                iconURL: interaction.user.avatarURL() || undefined,
-            })
-            .setTimestamp();
-        await interaction.reply({embeds: [embed] });
+            const embed = new EmbedBuilder()
+                .setColor("#83b3f6")
+                .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
+                .addFields({
+                    name: `${index+1}등 투표 랭킹`,
+                    value: ((data.content as string[]).join("\n") || "정보 없음")
+                    })
+                .setFooter({
+                    text: interaction.user.tag,
+                    iconURL: interaction.user.avatarURL() || undefined,
+                })
+                .setTimestamp();
+            await interaction.reply({embeds: [embed]});
     }
 }
