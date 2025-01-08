@@ -1,0 +1,8 @@
+node_modules/
+.idea/
+.git/
+.env
+*.log
+.gitignore
+README.md
+LICENSE
