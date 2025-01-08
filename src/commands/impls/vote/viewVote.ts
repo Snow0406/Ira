@@ -20,6 +20,8 @@ export default class ViewVoteCommand implements Command {
     };
 
     async execute(interaction: CommandInteraction) {
+        const GAMEJAM_GUILD_ID: string = "1322585788248100884";
+
         if (!interaction.memberPermissions?.has("Administrator")) {
             await interaction.reply({
                 content: '관리자만 사용할 수 있는 명령어입니다.',
@@ -27,35 +29,35 @@ export default class ViewVoteCommand implements Command {
             return;
         }
 
-        const index = interaction.options.get("index")?.value as number;
+        if (interaction.guildId !== GAMEJAM_GUILD_ID) {
+            await interaction.reply({
+                content: '해당 서버에서는 사용할 수 없는 명령어 이에요 !',
+            });
+            return;
+        }
 
+        const index = interaction.options.get("index")?.value as number;
         const data: Result = voteStore.getVoteResult(index);
 
         if (!data.type) {
-            const embed = new EmbedBuilder()
-                .setColor("#fd0909")
-                .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
-                .setDescription(data.content.toString())
-                .setFooter({
-                    text: interaction.user.tag,
-                    iconURL: interaction.user.avatarURL() || undefined,
-                })
-                .setTimestamp();
-            await interaction.reply({embeds: [embed]});
+            await interaction.reply({
+                content: data.content.toString(),
+            });
             return;
         }
-            const embed = new EmbedBuilder()
-                .setColor("#83b3f6")
-                .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
-                .addFields({
-                    name: `${index+1}등 투표 랭킹`,
-                    value: ((data.content as string[]).join("\n") || "정보 없음")
-                    })
-                .setFooter({
-                    text: interaction.user.tag,
-                    iconURL: interaction.user.avatarURL() || undefined,
-                })
-                .setTimestamp();
-            await interaction.reply({embeds: [embed]});
+
+        const embed = new EmbedBuilder()
+            .setColor("#83b3f6")
+            .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
+            .addFields({
+                name: `${index+1}등 투표 랭킹`,
+                value: ((data.content as string[]).join("\n") || "정보 없음")
+            })
+            .setFooter({
+                text: interaction.user.tag,
+                iconURL: interaction.user.avatarURL() || undefined,
+            })
+            .setTimestamp();
+        await interaction.reply({embeds: [embed]});
     }
 }

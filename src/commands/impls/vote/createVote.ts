@@ -20,9 +20,17 @@ export default class CreateVoteCommand implements Command {
     };
 
     async execute(interaction: CommandInteraction) {
+        const GAMEJAM_GUILD_ID: string = "1322585788248100884";
         if (!interaction.memberPermissions?.has("Administrator")) {
             await interaction.reply({
                 content: '관리자만 사용할 수 있는 명령어입니다.',
+            });
+            return;
+        }
+
+        if (interaction.guildId !== GAMEJAM_GUILD_ID) {
+            await interaction.reply({
+                content: '해당 서버에서는 사용할 수 없는 명령어 이에요 !',
             });
             return;
         }
@@ -34,16 +42,9 @@ export default class CreateVoteCommand implements Command {
         voteStore.createVote(data);
 
         if (data < 1) {
-            const embed = new EmbedBuilder()
-                .setColor("#fd0909")
-                .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
-                .setDescription("0보다 크게 해주세요 !")
-                .setFooter({
-                    text: interaction.user.tag,
-                    iconURL: interaction.user.avatarURL() || undefined,
-                })
-                .setTimestamp();
-            await interaction.reply({embeds: [embed] });
+            await interaction.reply({
+                content: '0보다는 크게 해주세요 !',
+            });
             return;
         }
 
@@ -57,6 +58,6 @@ export default class CreateVoteCommand implements Command {
                 iconURL: interaction.user.avatarURL() || undefined,
             })
             .setTimestamp();
-        await interaction.reply({embeds: [embed] });
+        await interaction.reply({ embeds: [embed] });
     }
 }
