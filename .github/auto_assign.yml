@@ -1,0 +1,2 @@
+# PR 작성자를 자동으로 assignee로 지정
+addAssignees: author

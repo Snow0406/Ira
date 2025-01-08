@@ -4,13 +4,14 @@
     "useDefineForClassFields": true,
     "module": "ESNext",
     "skipLibCheck": true,
-    "moduleResolution": "Bundler",
-    "noEmit": true,
+    "moduleResolution": "node",
+    "noEmit": false,
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
+    "outDir": "./dist",
     "paths": {
       "@src/*": ["src/*"]
     }

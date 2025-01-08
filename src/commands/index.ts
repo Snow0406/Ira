@@ -3,7 +3,7 @@ import { filterAllCommands } from "@src/commands/utils";
 import path from "node:path";
 import fg from "fast-glob";
 
-console.log("Init Commands");
+console.log("* Init Commands");
 
 const modules = await fg("src/commands/impls/**/*.ts", {
     onlyFiles: true,
