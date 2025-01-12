@@ -11,6 +11,12 @@ export default class VoteCommand implements Command {
         description: "1등, 2등, 3등을 투표하세요 !\n* 웨루게임잼 RE:개발살던놈들 전용 기능",
         option: [
             {
+                name: "name",
+                description: "투표 이름 (예: 종합, 비주얼 등)",
+                required: true,
+                type: ApplicationCommandOptionType.String
+            },
+            {
                 name: "1st_place",
                 description: "1등",
                 required: true,
@@ -35,6 +41,7 @@ export default class VoteCommand implements Command {
         const GAMEJAM_GUILD_ID: string = "1322585788248100884";
         const BOTLOG_CHANNEL_ID: string = "1325674348421316668";
 
+        const voteName = interaction.options.get("name")?.value as string;
         const inputData: (number | undefined)[] = [
             interaction.options.get("1st_place")?.value as number,
             interaction.options.get("2nd_place")?.value as number,
@@ -59,9 +66,9 @@ export default class VoteCommand implements Command {
         }
 
         const voteData: Result[] = [
-            voteStore.addVote(0, interaction.user.id, inputData[0] as number),
-            voteStore.addVote(1, interaction.user.id, inputData[1] as number),
-            voteStore.addVote(2, interaction.user.id, inputData[2] as number)
+            voteStore.addVote(voteName, 0, interaction.user.id, inputData[0] as number),
+            voteStore.addVote(voteName, 1, interaction.user.id, inputData[1] as number),
+            voteStore.addVote(voteName, 2, interaction.user.id, inputData[2] as number)
         ];
 
         // 실패한 데이터 처리
@@ -78,7 +85,7 @@ export default class VoteCommand implements Command {
         const embed = new EmbedBuilder()
             .setColor("#83b3f6")
             .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
-            .setDescription("투표 성공 !")
+            .setDescription(`${voteName} 투표 성공 !`)
             .setFooter({
                 text: interaction.user.tag,
                 iconURL: interaction.user.avatarURL() || undefined,
@@ -91,7 +98,7 @@ export default class VoteCommand implements Command {
             const embed = new EmbedBuilder()
                 .setColor("#83b3f6")
                 .setTitle("웨루게임잼 RE:개발살던놈들 Vote Log")
-                .setDescription(`1등: \`${inputData[0]}\`, 2등: \`${inputData[1]}\`, 3등: \`${inputData[2]}\``)
+                .setDescription(`${voteName}의 투표\n1등: \`${inputData[0]}\`, 2등: \`${inputData[1]}\`, 3등: \`${inputData[2]}\``)
                 .setFooter({
                     text: interaction.user.tag,
                     iconURL: interaction.user.avatarURL() || undefined,

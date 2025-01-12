@@ -3,34 +3,39 @@
 import { Result } from "@src/types";
 
 interface VoteData {
+    name: string;
     maxOption: number; // 투표 선택지
     voteUsers: Map<string, number>; // userId, option
     createdAt: Date;
 }
 
 class VoteStore {
-    private readonly voteData: VoteData[];
+    private readonly votes: Map<string,VoteData[]>;
 
     public constructor() {
-        this.voteData = [];
+        this.votes = new Map();
     }
 
     // 투표 생성
-    public createVote(maxOption: number): number {
+    public createVote(name: string, maxOption: number): void {
+        if (!this.votes.has(name)) this.votes.set(name, []);
+
         const voteData: VoteData = {
+            name,
             maxOption,
             voteUsers: new Map(),
             createdAt: new Date(),
         }
-        this.voteData.push(voteData);
-        return this.voteData.length - 1;
+
+        const voteArray = this.votes.get(name)!;
+        voteArray.push(voteData);
     }
 
     // 투표 하기
-    public addVote(index: number, userID: string, option: number): Result {
-        const vote = this.getVote(index);
+    public addVote(name: string, index: number, userID: string, option: number): Result {
+        const vote = this.getVote(name, index);
         if (!vote) {
-            console.log(`* addVote failed: ${index} not found`);
+            console.log(`* addVote failed: ${name}/${index} not found`);
             return { type: false, content: "존재하지 않는 투표 ID 이에요 !" };
         }
         if (vote.voteUsers.has(userID))
@@ -43,10 +48,10 @@ class VoteStore {
     }
 
     // 투표 결과 가져오기
-    public getVoteResult(index: number) : Result {
-        const vote = this.getVote(index);
+    public getVoteResult(name: string, index: number) : Result {
+        const vote = this.getVote(name, index);
         if (!vote) {
-            console.log(`* getVoteResult failed: ${index} not found`);
+            console.log(`* getVoteResult failed: ${name}/${index} not found`);
             return { type: false, content: "없는 투표입니다." };
         }
 
@@ -73,15 +78,18 @@ class VoteStore {
     }
 
     // 투표 삭제하기
-    public deleteVote(index: number): boolean {
-        if (index < 0 || index > this.voteData.length) return false;
-        this.voteData.splice(index, 1);
+    public deleteVote(name: string, index: number): boolean {
+        const voteArray = this.votes.get(name);
+        if (!voteArray || index < 0 || index >= voteArray.length) return false;
+        voteArray.splice(index, 1);
         return true;
     }
 
     // 투표 데이터 가져오기
-    private getVote(index: number): VoteData | undefined {
-        return this.voteData[index];
+    private getVote(name: string, index: number): VoteData | undefined {
+        const voteArray = this.votes.get(name);
+        if (!voteArray) return undefined;
+        return voteArray[index];
     }
 }
 

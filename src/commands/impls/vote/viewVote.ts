@@ -11,6 +11,12 @@ export default class ViewVoteCommand implements Command {
         description: "투표 결과\n* 웨루게임잼 RE:개발살던놈들 전용 기능",
         option: [
             {
+                name: "name",
+                description: "투표 이름 (예: 종합, 비주얼 등)",
+                required: true,
+                type: ApplicationCommandOptionType.String
+            },
+            {
                 name: "index",
                 description: "0: 1등 투표 목록, 1: 2등 투표 목록, 2: 3등 투표 목록",
                 required: true,
@@ -36,8 +42,9 @@ export default class ViewVoteCommand implements Command {
             return;
         }
 
+        const voteName = interaction.options.get("name")?.value as string;
         const index = interaction.options.get("index")?.value as number;
-        const data: Result = voteStore.getVoteResult(index);
+        const data: Result = voteStore.getVoteResult(voteName, index);
 
         if (!data.type) {
             await interaction.reply({
@@ -50,7 +57,7 @@ export default class ViewVoteCommand implements Command {
             .setColor("#83b3f6")
             .setTitle("웨루게임잼 RE:개발살던놈들 Vote")
             .addFields({
-                name: `${index+1}등 투표 랭킹`,
+                name: `${voteName}의 ${index+1}등 투표 랭킹`,
                 value: ((data.content as string[]).join("\n") || "정보 없음")
             })
             .setFooter({

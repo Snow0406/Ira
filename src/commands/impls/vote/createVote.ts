@@ -11,6 +11,12 @@ export default class CreateVoteCommand implements Command {
         description: "투표 생성\n* 웨루게임잼 RE:개발살던놈들 전용 기능",
         option: [
             {
+                name: "name",
+                description: "투표 이름 (예: 종합, 비주얼 등)",
+                required: true,
+                type: ApplicationCommandOptionType.String
+            },
+            {
                 name: "max_option",
                 description: "투표 선택지 갯수",
                 required: true,
@@ -35,11 +41,12 @@ export default class CreateVoteCommand implements Command {
             return;
         }
 
+        const voteName = interaction.options.get("name")?.value as string;
         const data = interaction.options.get("max_option")?.value as number;
 
-        voteStore.createVote(data);
-        voteStore.createVote(data);
-        voteStore.createVote(data);
+        voteStore.createVote(voteName, data);
+        voteStore.createVote(voteName, data);
+        voteStore.createVote(voteName, data);
 
         if (data < 1) {
             await interaction.reply({
