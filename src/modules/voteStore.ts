@@ -2,7 +2,6 @@
 
 import { Result } from "@src/types";
 import { readFileSync } from "fs";
-import { join } from "path";
 
 interface VoteData {
     name: string;
@@ -36,7 +35,7 @@ class VoteStore {
     // 투표 하기
     public addVote(name: string, index: number, userID: string, option: number): Result {
         const blockJson = JSON.parse(
-            readFileSync(join(__dirname, '../../vote-restriction.json'), 'utf-8')
+            readFileSync("./src/data/creator-vote-block.json", 'utf-8')
         )["data"] as { userID: string, voteID: number }[];
         const vote = this.getVote(name, index);
 

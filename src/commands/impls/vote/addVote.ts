@@ -65,21 +65,15 @@ export default class VoteCommand implements Command {
             return;
         }
 
-        const voteData: Result[] = [
-            voteStore.addVote(voteName, 0, interaction.user.id, inputData[0] as number),
-            voteStore.addVote(voteName, 1, interaction.user.id, inputData[1] as number),
-            voteStore.addVote(voteName, 2, interaction.user.id, inputData[2] as number)
-        ];
-
-        // 실패한 데이터 처리
-        if (voteData.some(vote => !vote.type)) {
-            const errorContent =
-                voteData.find(vote => !vote.type)?.content.toString() || '처리 중 오류가 발생했습니다.';
-            await interaction.reply({
-                content: errorContent,
-                flags: ["Ephemeral"]
-            });
-            return;
+        for (let i = 0; i < 3; i++) {
+            const data: Result = voteStore.addVote(voteName, i, interaction.user.id, inputData[i] as number);
+            if (!data.type) {
+                await interaction.reply({
+                    content: data.content.toString(),
+                    flags: ["Ephemeral"]
+                });
+                return;
+            }
         }
 
         const embed = new EmbedBuilder()
