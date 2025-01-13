@@ -1,6 +1,8 @@
 // 웨루게임잼 RE:개발살던놈들에서 사용할 투표 기능
 
 import { Result } from "@src/types";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 interface VoteData {
     name: string;
@@ -33,7 +35,11 @@ class VoteStore {
 
     // 투표 하기
     public addVote(name: string, index: number, userID: string, option: number): Result {
+        const blockJson = JSON.parse(
+            readFileSync(join(__dirname, '../../vote-restriction.json'), 'utf-8')
+        )["data"] as { userID: string, voteID: number }[];
         const vote = this.getVote(name, index);
+
         if (!vote) {
             console.log(`* addVote failed: ${name}/${index} not found`);
             return { type: false, content: "존재하지 않는 투표 ID 이에요 !" };
@@ -42,6 +48,8 @@ class VoteStore {
             return { type: false, content: "이미 투표하셨어요 !" };
         if (option > vote.maxOption || option < 1)
             return { type: false, content: `잘못된 번호이에요 ! (1 ~ ${vote.maxOption} 선택 가능)` };
+        if (blockJson.some(v => v.userID === userID && v.voteID === option))
+            return { type: false, content: `자기가 만든 게임은 투표 못해요 !` };
 
         vote.voteUsers.set(userID, option);
         return { type: true, content: "투표 성공 !" };
