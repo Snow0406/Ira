@@ -10,6 +10,7 @@ const modules = await fg("src/commands/impls/**/*.ts", {
     dot: true,
 });
 
+// @ts-ignore
 export const allCommands: Command[] = filterAllCommands(
     await Promise.all(
         modules.map(
