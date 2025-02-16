@@ -1,7 +1,7 @@
 FROM node:20-slim AS base
 LABEL authors="hy"
 
-ENV COREPACK_IGNORE_SIGNATURES=1
+# ENV COREPACK_IGNORE_SIGNATURES=1
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 
@@ -12,10 +12,10 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml tsconfig.json ./
 
 FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --no-frozen-lockfile
 
 FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --no-frozen-lockfile
 COPY . .
 RUN pnpm run build
 
