@@ -11,7 +11,7 @@
 	"keywords": [],
 	"author": "Snow0406",
 	"license": "MIT",
-	"type": "module",
+	"type": "commonjs",
 	"dependencies": {
 		"axios": "^1.7.9",
 		"cheerio": "^1.0.0",
