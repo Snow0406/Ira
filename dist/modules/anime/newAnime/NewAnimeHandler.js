@@ -1,10 +1,13 @@
-import axios from "axios";
-import * as cheerio from "cheerio";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.newAnimeHandler = void 0;
+const axios_1 = require("axios");
+const cheerio = require("cheerio");
 class NewAnimeHandler {
     _axios;
     _data = { date: "", detail: [] };
     constructor() {
-        this._axios = axios.create({
+        this._axios = axios_1.default.create({
             baseURL: process.env.NEWANIME_URL,
             headers: {
                 "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
@@ -51,4 +54,4 @@ class NewAnimeHandler {
         }
     }
 }
-export const newAnimeHandler = new NewAnimeHandler();
+exports.newAnimeHandler = new NewAnimeHandler();

@@ -12,7 +12,7 @@ export function setupEventHandlers(client: Client) {
     client.on(Events.InteractionCreate, async (interaction) => {
         if (!interaction.isCommand()) return;
 
-        for (const command of allCommands) {
+        for (const command of await allCommands) {
             if (interaction.isChatInputCommand()) {
                 if (command.com.name === interaction.commandName) {
                     await command.execute(interaction);

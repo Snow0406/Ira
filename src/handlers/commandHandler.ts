@@ -9,7 +9,7 @@ type OptionBuilderFunction = (command: SlashCommandBuilder, option: CommandOptio
 export async function registerSlashCommands() : Promise<void> {
     const rest = new REST().setToken(process.env.DISCORD_APP_TOKEN!);
     try {
-        const commandsData = allCommands.map(cmd => buildCommand(cmd))
+        const commandsData = (await allCommands).map(cmd => buildCommand(cmd))
         const data = await rest.put(
             Routes.applicationCommands(process.env.APP_ID!),
             { body: commandsData }

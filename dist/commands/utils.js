@@ -1,4 +1,7 @@
-export function filterAllCommands(arr) {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.filterAllCommands = filterAllCommands;
+function filterAllCommands(arr) {
     return arr.map((com) => {
         const idx = arrComName.findIndex((v) => v[1] === com.com.name);
         if (idx !== -1) {

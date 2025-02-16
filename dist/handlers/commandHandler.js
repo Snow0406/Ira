@@ -1,12 +1,15 @@
-import { ApplicationCommandOptionType, REST, Routes, SlashCommandBuilder } from "discord.js";
-import { allCommands } from "../commands";
-import "dotenv/config";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerSlashCommands = registerSlashCommands;
+const discord_js_1 = require("discord.js");
+const commands_1 = require("../commands");
+require("dotenv/config");
 //? Register Slash Commands
-export async function registerSlashCommands() {
-    const rest = new REST().setToken(process.env.DISCORD_APP_TOKEN);
+async function registerSlashCommands() {
+    const rest = new discord_js_1.REST().setToken(process.env.DISCORD_APP_TOKEN);
     try {
-        const commandsData = allCommands.map(cmd => buildCommand(cmd));
-        const data = await rest.put(Routes.applicationCommands(process.env.APP_ID), { body: commandsData });
+        const commandsData = (await commands_1.allCommands).map(cmd => buildCommand(cmd));
+        const data = await rest.put(discord_js_1.Routes.applicationCommands(process.env.APP_ID), { body: commandsData });
         //@ts-expect-error data is unknown
         console.log(`* Registered total ${data.length} slash commands.`);
     }
@@ -16,7 +19,7 @@ export async function registerSlashCommands() {
     }
 }
 function buildCommand(cmd) {
-    const command = new SlashCommandBuilder()
+    const command = new discord_js_1.SlashCommandBuilder()
         .setName(cmd.com.name)
         .setNameLocalizations(cmd.com.l10n?.name ?? null)
         .setDescription(cmd.com.description)
@@ -30,9 +33,9 @@ function buildCommand(cmd) {
 }
 function addCommandOption(command, option) {
     const optionBuilders = {
-        [ApplicationCommandOptionType.String]: buildStringOption,
-        [ApplicationCommandOptionType.Number]: buildNumberOption,
-        [ApplicationCommandOptionType.Boolean]: buildBooleanOption
+        [discord_js_1.ApplicationCommandOptionType.String]: buildStringOption,
+        [discord_js_1.ApplicationCommandOptionType.Number]: buildNumberOption,
+        [discord_js_1.ApplicationCommandOptionType.Boolean]: buildBooleanOption
     };
     const builder = optionBuilders[option.type];
     if (builder) {

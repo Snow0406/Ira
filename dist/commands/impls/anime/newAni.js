@@ -1,19 +1,21 @@
-import { EmbedBuilder } from "discord.js";
-import { newAnimeHandler } from "../../../modules/anime/newAnime/NewAnimeHandler";
-export default class NewAniCommand {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const discord_js_1 = require("discord.js");
+const NewAnimeHandler_1 = require("../../../modules/anime/newAnime/NewAnimeHandler");
+class NewAniCommand {
     com = {
         name: "newani",
         description: "애니 신작 목록을 가져옵니다 !"
     };
     async execute(interaction) {
-        const pageData = await newAnimeHandler.fetchPage();
+        const pageData = await NewAnimeHandler_1.newAnimeHandler.fetchPage();
         if (!pageData) {
             await interaction.reply({
                 content: '* NewAnimeHandler fetchPage Error',
             });
             return;
         }
-        const data = newAnimeHandler.parseHTML(pageData);
+        const data = NewAnimeHandler_1.newAnimeHandler.parseHTML(pageData);
         if (data.detail.length === 0) {
             await interaction.reply({
                 content: '* NewAnimeHandler parseHTML Error',
@@ -26,7 +28,7 @@ export default class NewAniCommand {
             return `- ${index + 1}. ${item.title}\n${'```'}- 제작사: ${item.studio}\n- 방영일: ${item.date}${extra}${'```'}`;
         })
             .join("\n\n");
-        const embed = new EmbedBuilder()
+        const embed = new discord_js_1.EmbedBuilder()
             .setColor("#83b3f6")
             .setTitle(`[ ${data.date} ]`)
             .setDescription(listString)
@@ -38,3 +40,4 @@ export default class NewAniCommand {
         await interaction.reply({ embeds: [embed] });
     }
 }
+exports.default = NewAniCommand;
