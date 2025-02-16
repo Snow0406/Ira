@@ -1,5 +1,5 @@
 import { Events, ActivityType, PresenceUpdateStatus } from "discord.js";
-import { allCommands } from "@src/commands";
+import { allCommands } from "../commands";
 export function setupEventHandlers(client) {
     // Ready 이벤트
     client.once(Events.ClientReady, () => {

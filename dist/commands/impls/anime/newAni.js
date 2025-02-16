@@ -1,5 +1,5 @@
 import { EmbedBuilder } from "discord.js";
-import { newAnimeHandler } from "@src/modules/anime/newAnime/NewAnimeHandler";
+import { newAnimeHandler } from "../../../modules/anime/newAnime/NewAnimeHandler";
 export default class NewAniCommand {
     com = {
         name: "newani",

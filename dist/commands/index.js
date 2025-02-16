@@ -1,4 +1,4 @@
-import { filterAllCommands } from "@src/commands/utils";
+import { filterAllCommands } from "./utils";
 // @ts-ignore
 import path from "node:path";
 // @ts-ignore

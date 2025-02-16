@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionType, REST, Routes, SlashCommandBuilder } from "discord.js";
-import { allCommands } from "@src/commands";
+import { allCommands } from "../commands";
 import "dotenv/config";
 //? Register Slash Commands
 export async function registerSlashCommands() {

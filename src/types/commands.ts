@@ -1,4 +1,4 @@
-import type {
+ import type {
     ApplicationCommandOptionType,
     CommandInteraction,
 } from "discord.js";
