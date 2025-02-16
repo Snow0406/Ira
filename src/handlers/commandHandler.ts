@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionType, REST, Routes, SlashCommandBuilder } from "discord.js";
-import { allCommands } from "@src/commands";
-import { Command, CommandOption } from "@src/types";
+import { allCommands } from "../commands";
+import { Command, CommandOption } from "../types";
 import "dotenv/config";
 
 type OptionBuilderFunction = (command: SlashCommandBuilder, option: CommandOption) => void;

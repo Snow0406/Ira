@@ -1,4 +1,4 @@
-import { Command } from "@src/types";
+import { Command } from "../types";
 
 export function filterAllCommands(arr: Command[]) {
     return arr.map((com) => {

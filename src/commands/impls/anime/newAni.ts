@@ -1,6 +1,6 @@
 import { type CommandInteraction, EmbedBuilder } from "discord.js";
-import type { Command, CommandMetadata } from "@src/types";
-import { newAnimeHandler } from "@src/modules/anime/newAnime/NewAnimeHandler";
+import type { Command, CommandMetadata } from "../../../types";
+import { newAnimeHandler } from "../../../modules/anime/newAnime/NewAnimeHandler";
 
 export default class NewAniCommand implements Command {
     com: CommandMetadata = {

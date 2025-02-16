@@ -1,5 +1,5 @@
 import { type CommandInteraction, EmbedBuilder } from "discord.js";
-import type { Command, CommandMetadata } from "@src/types";
+import type { Command, CommandMetadata } from "../../types";
 
 export default class PingCommand implements Command {
     com: CommandMetadata = {

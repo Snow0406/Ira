@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import { registerSlashCommands } from "@src/handlers/commandHandler";
-import { setupEventHandlers } from "@src/handlers/eventHandler";
+import { registerSlashCommands } from "./handlers/commandHandler";
+import { setupEventHandlers } from "./handlers/eventHandler";
 import "dotenv/config";
 
 const client = new Client({

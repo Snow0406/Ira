@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 import * as cheerio from "cheerio";
-import { NewAnimeResult } from "@src/modules/anime/newAnime/INewAnimeInfo";
+import { NewAnimeResult } from "./INewAnimeInfo";
 
 class NewAnimeHandler {
     private _axios: AxiosInstance;

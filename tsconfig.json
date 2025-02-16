@@ -14,9 +14,6 @@
     "outDir": "./dist",
     "paths": {
       "@src/*": ["src/*"]
-    },
-    "_moduleAliases": {
-      "@src": "dist/src"
     }
   }
 }

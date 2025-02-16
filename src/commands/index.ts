@@ -1,5 +1,5 @@
-import { Command } from "@src/types";
-import { filterAllCommands } from "@src/commands/utils";
+import { Command } from "../types";
+import { filterAllCommands } from "./utils";
 // @ts-ignore
 import path from "node:path";
 // @ts-ignore
