@@ -1,29 +1,17 @@
-FROM node:20-slim AS base
-LABEL authors="hy"
-
-# ENV COREPACK_IGNORE_SIGNATURES=1
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-
-RUN corepack enable
-
+FROM node:18-slim AS base
+RUN apt-get update && apt-get install -y ffmpeg python3 && rm -rf /var/lib/apt/lists/*
+RUN npm install -g pnpm
 WORKDIR /app
-
 COPY package.json pnpm-lock.yaml tsconfig.json ./
 
-FROM base AS prod-deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --no-frozen-lockfile
-
-FROM base AS build
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --no-frozen-lockfile
+FROM base AS builder
+WORKDIR /app
 COPY . .
+RUN pnpm install
 RUN pnpm run build
 
-FROM node:20-slim
-
+FROM base AS deploy
 WORKDIR /app
-COPY --from=prod-deps /app/node_modules ./node_modules
-COPY --from=build /app/dist ./dist
-COPY package.json .
-
+ENV NODE_ENV=production
+COPY --from=builder /app ./
 CMD ["pnpm", "start"]
