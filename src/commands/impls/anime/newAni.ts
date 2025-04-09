@@ -88,7 +88,7 @@ export default class NewAniCommand implements Command {
       const embed = generateEmbed(currentPage);
       const buttons = getButtons(currentPage);
 
-      const response = await interaction.editReply({
+      await interaction.editReply({
         embeds: [embed],
         components: [buttons],
       });
